@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.aleksa.marsroverapi.dto.HomeDto;
 import com.aleksa.marsroverapi.response.MarsRoverApiResponse;
 import com.aleksa.marsroverapi.service.MarsRoverApiService;
 
@@ -21,12 +22,16 @@ public class HomeController {
     private MarsRoverApiService roverService;
     
     @GetMapping("/")
-    public String getHome(ModelMap model, @RequestParam(required = false) String marsApiRoverData){
-        if(StringUtils.isEmpty(marsApiRoverData)){
-            marsApiRoverData = "opportunity";
+    public String getHome(ModelMap model,HomeDto homeDto){
+        if(StringUtils.isEmpty(homeDto.getMarsApiRoverData())){
+            homeDto.setMarsApiRoverData("Opportunity");
         }
-        MarsRoverApiResponse roverData = roverService.getRoverData(marsApiRoverData);
+        if(homeDto.getMarsSol() == null){
+            homeDto.setMarsSol(1);
+        }
+        MarsRoverApiResponse roverData = roverService.getRoverData(homeDto.getMarsApiRoverData(),homeDto.getMarsSol());
         model.put("roverData", roverData);
+        model.put("homeDto", homeDto);
         return "index";
     }
 
