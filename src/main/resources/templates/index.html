@@ -9,6 +9,7 @@
 
         <form method="get" action="" id="frmRoverType">
             <input type="hidden" th:field="${homeDto.marsApiRoverData}"/>
+            <input type="hidden" th:field="${homeDto.userId}"/>
             <div class="btn-group btn-group-lg" role="group" style="margin: 2em 0em;">
                 <button type="button" class="btn btn-secondary" id="marsApiCuriosity">Curiosity</button>
                 <button type="button" class="btn btn-secondary" id="marsApiOpportunity">Opportunity</button>
@@ -99,8 +100,15 @@
                 <input class = "form-control form-control-lg" type="number" th:field="${homeDto.marsSol}" min ="0"/>
             </div>
 
-            <button class="btn btn-primary btn-lg">Submit</button>
-
+            <div class = "row">
+                <div class="col-3 col-md-2">    
+                    <button type="submit" class="btn btn-primary btn-Lg">Submit</button>
+                </div>
+                <div class = "col-9 col-md-10" style="margin-top: 0.3em">    
+                    <input type="checkbox" th:field ="${homeDto.rememberPreferences}"/>
+                    <label for="rememberPreferences1"> Remeber Preferences </label>
+                </div>
+            </div>
         </form>
 
 

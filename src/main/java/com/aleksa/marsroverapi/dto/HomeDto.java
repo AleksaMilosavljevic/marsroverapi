@@ -1,10 +1,19 @@
 package com.aleksa.marsroverapi.dto;
 
-public class HomeDto {
-    //@RequestParam(required = false) String marsApiRoverData, 
-    //@RequestParam(required = false ) Integer marsSol,
-    //@RequestParam(required = false ) Boolean defaultCheck1
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "mars_api_preferences")
+public class HomeDto {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long userId;
     private String marsApiRoverData;
     private Integer marsSol;
     private Boolean cameraFhaz;
@@ -16,8 +25,39 @@ public class HomeDto {
     private Boolean cameraNavcam;
     private Boolean cameraPancam;
     private Boolean cameraMinites;
+    private boolean rememberPreferences;
+
+    
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
 
+    public boolean isRememberPreferences() {
+        return this.rememberPreferences;
+    }
+
+    public boolean getRememberPreferences() {
+        return this.rememberPreferences;
+    }
+
+    public void setRememberPreferences(boolean rememberPreferences) {
+        this.rememberPreferences = rememberPreferences;
+    }
+
+    @Column(length = 20)
     public String getMarsApiRoverData() {
         return this.marsApiRoverData;
     }
@@ -143,6 +183,25 @@ public class HomeDto {
         this.cameraMinites = cameraMinites;
     }
    
+
+    @Override
+    public String toString() {
+        return "{" +
+            " userId='" + getUserId() + "'" +
+            ", marsApiRoverData='" + getMarsApiRoverData() + "'" +
+            ", marsSol='" + getMarsSol() + "'" +
+            ", cameraFhaz='" + isCameraFhaz() + "'" +
+            ", cameraRhaz='" + isCameraRhaz() + "'" +
+            ", cameraMast='" + isCameraMast() + "'" +
+            ", cameraChemcam='" + isCameraChemcam() + "'" +
+            ", cameraMhali='" + isCameraMhali() + "'" +
+            ", cameraMardi='" + isCameraMardi() + "'" +
+            ", cameraNavcam='" + isCameraNavcam() + "'" +
+            ", cameraPancam='" + isCameraPancam() + "'" +
+            ", cameraMinites='" + isCameraMinites() + "'" +
+            ", rememberPreferences='" + isRememberPreferences() + "'" +
+            "}";
+    }
     
 
 }
