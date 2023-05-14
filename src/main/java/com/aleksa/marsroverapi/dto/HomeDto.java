@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 public class HomeDto {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Long userId;
     private String marsApiRoverData;
     private Integer marsSol;
@@ -27,14 +26,6 @@ public class HomeDto {
     private Boolean cameraMinites;
     private boolean rememberPreferences;
 
-    
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return this.userId;

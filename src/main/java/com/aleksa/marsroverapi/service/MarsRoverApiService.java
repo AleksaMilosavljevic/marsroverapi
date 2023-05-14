@@ -8,10 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.aleksa.marsroverapi.dto.HomeDto;
+import com.aleksa.marsroverapi.repository.PreferenceRepository;
 import com.aleksa.marsroverapi.response.MarsPhoto;
 import com.aleksa.marsroverapi.response.MarsRoverApiResponse;
 
@@ -20,8 +22,13 @@ public class MarsRoverApiService {
 
    // private static final String API_KEY = "";
 
+   @Autowired
+   private PreferenceRepository preferenceRepository;
+
    private Map<String, List<String>> validCameras = new HashMap<>();
 
+   @Autowired
+   private PreferenceRepository preferencesRepo;
    
    public MarsRoverApiService(){
     validCameras.put("Opportunity", Arrays.asList("FHAZ","RHAZ","NAVCAM","PANCAM","MINITES"));
@@ -35,6 +42,7 @@ public class MarsRoverApiService {
         List<String> apiUrlEndpoints = getApiUrlEndpoints(homeDto);
         List<MarsPhoto> marsPhotos = new ArrayList<>();
         MarsRoverApiResponse response = new MarsRoverApiResponse();
+        
         apiUrlEndpoints.stream()
                         .forEach(url -> {
                             MarsRoverApiResponse apiResponse = rt.getForObject(url, MarsRoverApiResponse.class);
@@ -63,5 +71,13 @@ public class MarsRoverApiService {
     
     public Map<String,List<String>> getValidCameras() {
         return validCameras;
+    }
+
+    public HomeDto save(HomeDto homeDto) {
+        return preferenceRepository.save(homeDto);
+    }
+
+    public HomeDto findByUserId(Long userId) {
+       return  preferenceRepository.findByUserId(userId);
     }
 }

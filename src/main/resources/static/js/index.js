@@ -1,11 +1,17 @@
 let userId = getUrlParameter('userId');
 if(userId == null || userId == ''){
     userId = localStorage.get('userId');
+    if(userId == null || userId == ''){
+        document.getElementById('createUser').value =true;
+    } else{
+        //fetch('/savedPreferences?userId='+userId).then(response => response.json()).then(jsonResponse => console.log(jsonResponse));
+        window.location.href = '/?userId=' +userId;
+    }
 }
 
 
 if(userId != null && userId != ''){
-    localStorage.userId = userId;
+    localStorage.setItem('userId', userId);
     document.getElementById('userId').value = userId;
 }
 
@@ -14,7 +20,7 @@ let marsApiButtons = document.querySelectorAll("button[id*='marsApi']")
 marsApiButtons.forEach(button => button.addEventListener('click', function(){
             const buttonId = this.id
             const roverId = buttonId.split('marsApi')[1]
-            const apiData = document.getElementById('marsApiRoverData');
+            let apiData = document.getElementById('marsApiRoverData');
             apiData.value = roverId;
             document.getElementById('frmRoverType').submit()
 }))
@@ -26,11 +32,11 @@ function getUrlParameter(name) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
 
-let marsRoverType = getUrlParameter("marsApiRoverData");
+let marsRoverType = document.getElementById('marsRoverType').value;
 
 highlightBtnByRoverType(marsRoverType);
 
-let marsSol = getUrlParameter("marsSol");
+let marsSol = document.getElementById("marsSol").value;
 if(marsSol != null && marsSol != '' && marsSol >= 0);
     document.getElementById('marsSol').value = marsSol
 
